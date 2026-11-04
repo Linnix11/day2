@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Section, Eyebrow, btn } from './ui'
+import { Section, btn } from './ui'
 import { company, needs } from '../data'
 
 const rules = {
@@ -8,14 +8,14 @@ const rules = {
   message: v => (v.trim().length >= 10 ? '' : 'Décrivez votre projet en quelques mots (10 caractères minimum).'),
 }
 
-const input = 'w-full min-h-11 rounded-lg border bg-bg px-3 py-3 text-ink'
+const input = 'w-full min-h-12 rounded-md border bg-paper px-3 py-3 text-base text-ink'
 
 function Field({ id, label, error, children }) {
   return (
     <div className="mb-4">
-      <label htmlFor={id} className="mb-2 block text-sm font-semibold">{label}</label>
+      <label htmlFor={id} className="mb-2 block text-base font-medium">{label}</label>
       {children}
-      {error && <p id={`${id}-err`} className="mt-1 text-sm text-red-600">{error}</p>}
+      {error && <p id={`${id}-err`} className="mt-2 text-sm text-error">{error}</p>}
     </div>
   )
 }
@@ -53,13 +53,13 @@ export default function Contact() {
     onBlur: rules[name] ? () => validate(name) : undefined,
     'aria-invalid': errors[name] ? true : undefined,
     'aria-describedby': errors[name] ? `${name}-err` : undefined,
-    className: `${input} ${errors[name] ? 'border-red-600' : 'border-line'}`,
+    className: `${input} ${errors[name] ? 'border-error' : 'border-rule'}`,
   })
 
   const infos = [
-    ['E-mail', <a href={`mailto:${company.email}`} className="inline-flex min-h-11 items-center text-accent">{company.email}</a>],
-    ['Téléphone', <a href={`tel:${company.phoneHref}`} className="inline-flex min-h-11 items-center text-accent">{company.phone}</a>],
-    ['Zone', `${company.city} · Île-de-France · à distance`],
+    ['E-mail', <a href={`mailto:${company.email}`} className="inline-flex min-h-11 items-center text-pen">{company.email}</a>],
+    ['Téléphone', <a href={`tel:${company.phoneHref}`} className="inline-flex min-h-11 items-center text-pen">{company.phone}</a>],
+    ['Zone', `${company.city}, Île-de-France et à distance`],
     ['Site', company.domain],
   ]
 
@@ -67,19 +67,18 @@ export default function Contact() {
     <Section id="contact">
       <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr]">
         <div>
-          <Eyebrow>Contact</Eyebrow>
-          <h2 className="mb-4 text-3xl md:text-4xl">Parlons de votre projet</h2>
-          <p>Décrivez la tâche qui vous fait perdre du temps, je vous réponds sous 48 heures ouvrées.</p>
+          <h2 className="text-[2rem] leading-tight md:text-5xl">Parlons de votre semaine</h2>
+          <p className="mt-4 max-w-[46ch] font-serif text-lg leading-[1.6] text-muted">Décrivez la tâche qui vous fait perdre du temps. Je vous réponds sous 48 heures ouvrées.</p>
           <ul className="mt-8">
             {infos.map(([k, v]) => (
-              <li key={k} className="grid grid-cols-[100px_1fr] min-h-13 items-center gap-3 border-b border-line py-1 break-words">
+              <li key={k} className="grid grid-cols-[100px_1fr] min-h-13 items-center gap-3 border-b border-rule py-1 break-words">
                 <span className="text-sm text-muted">{k}</span>{v}
               </li>
             ))}
           </ul>
         </div>
 
-        <form noValidate onSubmit={onSubmit} className="rounded-xl border border-line bg-surface p-8">
+        <form noValidate onSubmit={onSubmit} className="rounded-lg border border-rule bg-paper-2 p-6 sm:p-8">
           <Field id="nom" label="Nom" error={errors.nom}>
             <input {...fieldProps('nom')} autoComplete="name" required />
           </Field>

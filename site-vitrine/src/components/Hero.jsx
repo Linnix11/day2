@@ -1,54 +1,90 @@
-import { Container, Eyebrow, btn } from './ui'
+import { useEffect, useState } from 'react'
+import { Container, btn } from './ui'
+import { tasks } from '../data'
 
-const flow = [
-  { label: 'Nouveau formulaire', dot: 'bg-accent-2' },
-  { label: 'IA · tri & résumé', dot: 'bg-accent' },
-  { label: 'CRM mis à jour', dot: 'bg-accent-2' },
-  { label: 'E-mail envoyé', dot: 'bg-accent' },
-]
+const WEEKS_PER_YEAR = 47
 
-function FlowDiagram() {
+function fmt(min) {
+  const h = Math.floor(min / 60), m = min % 60
+  if (!h) return `${m} min`
+  return m ? `${h} h ${String(m).padStart(2, '0')}` : `${h} h`
+}
+
+function TaskList() {
+  const [checked, setChecked] = useState(() => tasks.map(t => t.preset))
+  // Rature progressive au chargement : seul moment animé de la page.
+  const [drawn, setDrawn] = useState(0)
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setDrawn(tasks.length); return }
+    let i = 0
+    const id = setInterval(() => { i += 1; setDrawn(i); if (i >= tasks.length) clearInterval(id) }, 350)
+    return () => clearInterval(id)
+  }, [])
+
+  const total = tasks.reduce((sum, t, i) => sum + (checked[i] ? t.minutes : 0), 0)
+  const yearly = Math.round((total * WEEKS_PER_YEAR) / 60)
+
   return (
-    <div aria-hidden="true" className="rounded-2xl border border-line bg-surface p-8 shadow-[0_4px_24px_rgba(18,19,26,0.06)]">
-      {flow.map((step, i) => (
-        <div key={step.label}>
-          {i > 0 && <div className="h-6 w-0.5 bg-linear-to-b from-accent to-accent-2 opacity-60" style={{ marginLeft: `calc(${(i - 1) * 12}% + 28px)` }} />}
-          <div className="inline-flex items-center gap-3 rounded-[10px] border border-line bg-bg px-4 py-3 font-mono text-sm font-medium" style={{ marginLeft: `${i * 12}%` }}>
-            <span className={`size-2 rounded-full ${step.dot}`} />
-            {step.label}
-          </div>
-        </div>
-      ))}
-      <p className="mt-6 font-mono text-xs text-muted">Exécuté automatiquement · 0 clic</p>
+    <div className="rounded-lg border border-rule bg-paper shadow-[0_2px_16px_rgba(20,33,61,0.06)]">
+      <div className="flex items-baseline justify-between gap-4 border-b-2 border-pen px-5 pt-5 pb-3 sm:px-6">
+        <h2 className="text-lg">Ma semaine, à la main</h2>
+        <p className="text-sm text-muted">min / semaine</p>
+      </div>
+      <fieldset>
+        <legend className="sr-only">Cochez les tâches que vous faites encore à la main</legend>
+        <ul>
+          {tasks.map((t, i) => (
+            <li key={t.label} className="border-b border-rule">
+              <label className="flex min-h-13 cursor-pointer items-center gap-3 px-5 py-2 sm:px-6">
+                <input
+                  type="checkbox"
+                  id={`task-${i}`}
+                  checked={checked[i]}
+                  onChange={() => setChecked(c => c.map((v, j) => (j === i ? !v : v)))}
+                  className="size-5 shrink-0 accent-[var(--c-pen)]"
+                />
+                <span className="min-w-0 flex-1 font-serif text-[1.0625rem] leading-snug">
+                  <span className="strike" data-done={checked[i] && i < drawn}>{t.label}</span>
+                </span>
+                <span className="shrink-0 text-sm tabular-nums text-muted">{t.minutes}</span>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </fieldset>
+      <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2 px-5 py-5 sm:px-6" aria-live="polite">
+        <p className="text-sm text-muted">Temps récupérable</p>
+        <p className="sm:text-right">
+          <span className="marker rounded-sm px-1.5 text-2xl font-semibold tabular-nums">{fmt(total)}</span>
+          <span className="text-muted"> par semaine</span>
+          <span className="block text-sm text-muted">soit environ {yearly} h par an</span>
+        </p>
+      </div>
     </div>
   )
 }
 
 export default function Hero() {
   return (
-    <section className="pt-18 pb-24">
-      <Container className="grid items-center gap-12 lg:grid-cols-[1.25fr_1fr]">
-        <div>
-          <Eyebrow>Automatisation · Intelligence artificielle · Web</Eyebrow>
-          <h1 className="text-4xl leading-[1.1] sm:text-5xl lg:text-[3.5rem]">
-            Arrêtez de faire à la main ce qu'une machine fait{' '}
-            <em className="bg-linear-to-r from-accent to-accent-2 bg-clip-text not-italic text-transparent">mieux</em>.
+    <section className="border-b border-rule pt-16 pb-20 md:pt-24 md:pb-24">
+      <Container className="grid items-start gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+        <div className="lg:pt-6">
+          <h1 className="text-[2.5rem] leading-[1.08] tracking-[-0.02em] sm:text-6xl">
+            Vos tâches répétitives, faites sans vous.
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-muted">
-            J'aide les TPE, PME et indépendants à automatiser leurs tâches répétitives, à connecter leurs outils
-            et à intégrer l'IA là où elle fait vraiment gagner du temps.
+          <p className="mt-6 max-w-[34rem] font-serif text-xl leading-[1.6] text-muted">
+            J'automatise le travail administratif des TPE, PME et indépendants : saisies, relances, reporting,
+            réponses récurrentes. Vous gardez vos outils, ils travaillent ensemble.
           </p>
-          <div className="mt-8 mb-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <a href="#contact" className={btn.primary}>Réserver un audit gratuit</a>
-            <a href="#services" className={btn.ghost}>Voir les services</a>
+            <a href="#exemples" className={btn.ghost}>Voir des exemples</a>
           </div>
-          <ul className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted">
-            <li><strong className="text-ink">Audit</strong> offert de 30 min</li>
-            <li><strong className="text-ink">Réponse</strong> sous 48 h</li>
-            <li><strong className="text-ink">À distance</strong> partout en France</li>
-          </ul>
+          <p className="mt-8 max-w-[30rem] text-sm text-muted">
+            Cochez dans la liste ce que vous faites encore à la main. Les durées sont des moyennes indicatives.
+          </p>
         </div>
-        <FlowDiagram />
+        <TaskList />
       </Container>
     </section>
   )

@@ -1,55 +1,67 @@
 @import "tailwindcss";
 
-/* Couleurs du thème : modifiez ces valeurs pour changer l'identité visuelle */
+/* Univers : papier à lignes, stylo bille bleu, surligneur.
+   Mise en page : colonne de texte alignée à gauche, lignes réglées comme structure. */
 :root {
-  --c-bg: #f6f7fb;
-  --c-bg-alt: #eceef6;
-  --c-surface: #ffffff;
-  --c-ink: #12131a;
-  --c-muted: #5a5f73;
-  --c-line: #dcdfea;
-  --c-accent: #4f46e5;
-  --c-accent-2: #06b6d4;
-  --c-on-accent: #ffffff;
+  --c-paper: #ffffff;
+  --c-paper-2: #f3f6fc;      /* surface : bandeaux, formulaire */
+  --c-ink: #14213d;          /* texte */
+  --c-muted: #56627d;        /* texte secondaire */
+  --c-rule: #d6deee;         /* lignes réglées */
+  --c-pen: #2346c8;          /* stylo bille : liens, boutons, ratures */
+  --c-on-pen: #ffffff;
+  --c-marker: #ffe45c;       /* surligneur : réservé à « automatisé » */
+  --c-on-marker: #14213d;
+  --c-error: #b42318;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --c-bg: #0d0e14; --c-bg-alt: #13151e; --c-surface: #181a25;
-    --c-ink: #eef0f7; --c-muted: #a0a5b8; --c-line: #2a2d3c;
-    --c-accent: #818cf8; --c-accent-2: #22d3ee; --c-on-accent: #0d0e14;
+    --c-paper: #0e1525; --c-paper-2: #141d31; --c-ink: #e7ebf4; --c-muted: #a3adc4;
+    --c-rule: #27324b; --c-pen: #93a9ff; --c-on-pen: #0e1525; --c-marker: #e9d04b;
+    --c-on-marker: #0e1525; --c-error: #ff8a7a;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --c-bg: #0d0e14; --c-bg-alt: #13151e; --c-surface: #181a25;
-    --c-ink: #eef0f7; --c-muted: #a0a5b8; --c-line: #2a2d3c;
-    --c-accent: #818cf8; --c-accent-2: #22d3ee; --c-on-accent: #0d0e14;
+  --c-paper: #0e1525; --c-paper-2: #141d31; --c-ink: #e7ebf4; --c-muted: #a3adc4;
+  --c-rule: #27324b; --c-pen: #93a9ff; --c-on-pen: #0e1525; --c-marker: #e9d04b;
+  --c-on-marker: #0e1525; --c-error: #ff8a7a;
   color-scheme: dark;
 }
 
 @theme inline {
-  --color-bg: var(--c-bg);
-  --color-bg-alt: var(--c-bg-alt);
-  --color-surface: var(--c-surface);
+  --color-paper: var(--c-paper);
+  --color-paper-2: var(--c-paper-2);
   --color-ink: var(--c-ink);
   --color-muted: var(--c-muted);
-  --color-line: var(--c-line);
-  --color-accent: var(--c-accent);
-  --color-accent-2: var(--c-accent-2);
-  --color-on-accent: var(--c-on-accent);
-  --font-sans: Inter, system-ui, sans-serif;
-  --font-display: "Space Grotesk", Inter, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --color-rule: var(--c-rule);
+  --color-pen: var(--c-pen);
+  --color-on-pen: var(--c-on-pen);
+  --color-marker: var(--c-marker);
+  --color-on-marker: var(--c-on-marker);
+  --color-error: var(--c-error);
+  --font-sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
 }
 
 @layer base {
   html { scroll-behavior: smooth; }
-  body { @apply bg-bg text-ink font-sans leading-[1.6] antialiased; }
-  h1, h2, h3 { @apply font-display font-semibold tracking-tight; }
+  body { @apply bg-paper text-ink font-sans leading-[1.5] antialiased; }
+  h1, h2, h3 { @apply font-sans font-semibold; text-wrap: balance; }
   strong, b { @apply font-semibold; }
-  :focus-visible { @apply outline-2 outline-offset-3 outline-accent; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-  }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-pen; }
+}
+
+/* Rature au stylo : suit le texte ligne par ligne, apparaît en fondu de couleur */
+.strike {
+  text-decoration-line: line-through; text-decoration-thickness: 2px;
+  text-decoration-color: transparent; transition: text-decoration-color 300ms ease-out;
+}
+.strike[data-done="true"] { text-decoration-color: var(--c-pen); }
+
+.marker { background: var(--c-marker); color: var(--c-on-marker); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }

@@ -1,40 +1,52 @@
-import { Section, SectionHead, Eyebrow } from './ui'
+import { Section, SectionHead } from './ui'
 import { services, useCases, steps, company } from '../data'
-
-const card = 'rounded-xl border border-line bg-surface'
-const pad = (n) => String(n + 1).padStart(2, '0')
 
 export function Services() {
   return (
     <Section id="services">
-      <SectionHead eyebrow="Services" title="Ce que je fais pour vous" />
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {services.map((s, i) => (
-          <article key={s.title} className={`${card} p-8`}>
-            <span className="mb-4 block font-mono text-sm text-accent">{pad(i)}</span>
-            <h3 className="mb-2 text-lg leading-tight font-medium">{s.title}</h3>
-            <p className="text-muted">{s.text}</p>
-          </article>
+      <SectionHead title="Ce que je fais">
+        Quatre types de missions, souvent combinées dans un même projet.
+      </SectionHead>
+      <dl className="border-t-2 border-ink">
+        {services.map(s => (
+          <div key={s.title} className="grid gap-2 border-b border-rule py-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-8 md:py-8">
+            <dt className="text-2xl leading-tight font-medium">{s.title}</dt>
+            <dd className="max-w-[60ch] font-serif text-lg leading-[1.6] text-muted">{s.text}</dd>
+          </div>
         ))}
-      </div>
+      </dl>
     </Section>
   )
 }
 
 export function UseCases() {
   return (
-    <Section id="exemples" alt>
-      <SectionHead eyebrow="Exemples" title="Ce qu'on peut automatiser chez vous">
-        Des cas types, pour vous donner une idée. Chaque projet part de votre façon de travailler.
+    <Section id="exemples" tone="alt">
+      <SectionHead title="Avant, après">
+        Des cas types pour vous donner une idée. Chaque projet part de votre façon de travailler.
       </SectionHead>
-      <div className="grid gap-5 md:grid-cols-3">
-        {useCases.map(u => (
-          <article key={u.title} className={`${card} border-l-3 border-l-accent-2 px-8 py-6`}>
-            <p className="mb-4 inline-block rounded-md bg-accent/10 px-2 py-0.5 font-mono text-xs font-medium text-accent">{u.tag}</p>
-            <h3 className="mb-2 text-lg leading-tight font-medium">{u.title}</h3>
-            <p className="text-muted">{u.text}</p>
-          </article>
-        ))}
+      <div className="overflow-x-auto rounded-lg border border-rule bg-paper">
+        <table className="w-full min-w-[640px] border-collapse text-left">
+          <thead>
+            <tr className="border-b-2 border-ink">
+              <th scope="col" className="w-[24%] px-5 py-4 text-sm font-medium text-muted">Tâche</th>
+              <th scope="col" className="px-5 py-4 text-sm font-medium text-muted">Avant</th>
+              <th scope="col" className="px-5 py-4 text-sm font-medium text-muted">Après</th>
+            </tr>
+          </thead>
+          <tbody>
+            {useCases.map(u => (
+              <tr key={u.task} className="border-b border-rule last:border-0 align-top">
+                <th scope="row" className="px-5 py-5 text-lg leading-tight font-medium">{u.task}</th>
+                <td className="px-5 py-5 font-serif leading-[1.6] text-muted">{u.before}</td>
+                <td className="px-5 py-5 font-serif leading-[1.6]">
+                  <span className="marker mr-2 rounded-sm px-1.5 py-0.5 font-sans text-sm font-medium">automatisé</span>
+                  {u.after}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </Section>
   )
@@ -43,13 +55,13 @@ export function UseCases() {
 export function Method() {
   return (
     <Section id="methode">
-      <SectionHead eyebrow="Méthode" title="Comment se déroule un projet" />
-      <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <SectionHead title="Comment on travaille ensemble" />
+      <ol className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {steps.map((s, i) => (
-          <li key={s.title} className="border-t-2 border-ink pt-6">
-            <span className="mb-2 block font-display text-3xl font-semibold text-accent">{pad(i)}</span>
-            <h3 className="mb-2 text-lg leading-tight font-medium">{s.title}</h3>
-            <p className="text-muted">{s.text}</p>
+          <li key={s.title} className="relative border-t-2 border-pen pt-5">
+            <p className="text-sm text-pen tabular-nums">Étape {i + 1}{s.duration && `, ${s.duration}`}</p>
+            <h3 className="mt-2 text-xl leading-tight font-medium">{s.title}</h3>
+            <p className="mt-2 font-serif leading-[1.6] text-muted">{s.text}</p>
           </li>
         ))}
       </ol>
@@ -59,24 +71,26 @@ export function Method() {
 
 export function About() {
   return (
-    <Section id="apropos" alt>
-      <div className="grid items-center gap-10 md:grid-cols-[240px_1fr]">
-        <div aria-hidden="true" className="grid aspect-square max-w-60 place-items-center rounded-3xl bg-linear-135 from-accent to-accent-2">
-          <span className="font-display text-6xl leading-tight font-semibold text-white">AC</span>
-        </div>
-        <div className="max-w-2xl">
-          <Eyebrow>À propos</Eyebrow>
-          <h2 className="mb-4 text-3xl md:text-4xl">{company.owner}</h2>
-          <p className="mb-4">
-            Je suis le fondateur d'{company.brand}, une micro-entreprise spécialisée dans l'automatisation et
-            l'intelligence artificielle appliquées au quotidien des entreprises.
+    <Section id="apropos" tone="alt">
+      <div className="max-w-[62ch]">
+        <h2 className="text-[2rem] leading-tight md:text-5xl">Qui je suis</h2>
+        <div className="mt-8 space-y-5 font-serif text-lg leading-[1.7]">
+          <p>
+            Je m'appelle {company.owner} et j'ai créé {company.brand} pour une raison simple : trop d'entreprises
+            perdent des heures chaque semaine à recopier, relancer et classer à la main.
           </p>
           <p>
-            Mon objectif : des solutions simples, qui fonctionnent avec les outils que vous utilisez déjà, et que
-            vous comprenez. Basé à Montlignon, dans le Val-d'Oise, j'interviens sur place en Île-de-France et à
+            Je construis des automatisations simples, qui fonctionnent avec les outils que vous utilisez déjà et
+            que vous comprenez. Pas de logiciel à réapprendre, pas de boîte noire : chaque workflow est documenté
+            et vous appartient.
+          </p>
+          <p>
+            Je suis basé à Montlignon, dans le Val-d'Oise. Je me déplace en Île-de-France et je travaille à
             distance partout en France.
           </p>
         </div>
+        <p className="mt-8 text-lg font-medium">{company.owner}</p>
+        <p className="text-muted">Fondateur, {company.brand}</p>
       </div>
     </Section>
   )
@@ -88,12 +102,12 @@ export function Legal() {
     ['Siège', company.siege],
     ['SIRET', company.siret],
     ['TVA', 'TVA non applicable, art. 293 B du CGI'],
-    ['Contact', <a href={`mailto:${company.email}`} className="-my-3 inline-block py-3 text-accent">{company.email}</a>],
+    ['Contact', <a href={`mailto:${company.email}`} className="-my-3 inline-block py-3 text-pen">{company.email}</a>],
     ['Directeur de la publication', company.owner],
     ['Hébergeur', company.host],
   ]
   return (
-    <Section id="mentions" alt className="py-16! text-sm">
+    <Section id="mentions" className="border-t border-rule py-16! text-sm">
       <h2 className="text-2xl leading-tight">Mentions légales</h2>
       <dl className="mt-6 grid gap-x-6 gap-y-1 sm:grid-cols-[minmax(120px,220px)_1fr] sm:gap-y-2">
         {rows.map(([k, v]) => (
@@ -109,11 +123,10 @@ export function Legal() {
 
 export function Footer() {
   return (
-    <footer className="border-t border-line py-6 text-sm text-muted">
+    <footer className="border-t border-rule bg-paper-2 py-6 text-sm text-muted">
       <div className="mx-auto flex max-w-[1120px] flex-wrap justify-between gap-x-8 gap-y-2 px-4 md:px-8">
-        <p><strong className="text-ink">{company.brand}</strong> — {company.owner}, EI · Micro-entreprise</p>
-        <p>TVA non applicable, art. 293 B du CGI</p>
-        <p>© {new Date().getFullYear()} {company.domain} · <a href="#mentions" className="-my-3 inline-block py-3 text-accent">Mentions légales</a></p>
+        <p><span className="font-medium text-ink">{company.brand}</span>, {company.owner}, EI en micro-entreprise</p>
+        <p>© {new Date().getFullYear()} {company.domain}, <a href="#mentions" className="-my-3 inline-block py-3 text-pen">mentions légales</a></p>
       </div>
     </footer>
   )

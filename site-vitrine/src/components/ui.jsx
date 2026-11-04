@@ -2,30 +2,25 @@ export function Container({ className = '', children }) {
   return <div className={`mx-auto max-w-[1120px] px-4 md:px-8 ${className}`}>{children}</div>
 }
 
-export function Eyebrow({ children }) {
-  return <p className="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-accent">{children}</p>
-}
-
-export function Section({ id, alt = false, className = '', children }) {
+export function Section({ id, tone = 'paper', className = '', children }) {
   return (
-    <section id={id} className={`scroll-mt-16 py-20 md:py-24 ${alt ? 'bg-bg-alt' : ''} ${className}`}>
+    <section id={id} className={`scroll-mt-16 py-20 md:py-24 ${tone === 'alt' ? 'bg-paper-2' : ''} ${className}`}>
       <Container>{children}</Container>
     </section>
   )
 }
 
-export function SectionHead({ eyebrow, title, children }) {
+export function SectionHead({ title, children }) {
   return (
     <header className="mb-10 max-w-2xl">
-      <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="text-3xl leading-tight md:text-4xl">{title}</h2>
-      {children && <p className="mt-3 text-muted">{children}</p>}
+      <h2 className="text-[2rem] leading-tight md:text-5xl">{title}</h2>
+      {children && <p className="mt-4 font-serif text-lg leading-[1.6] text-muted">{children}</p>}
     </header>
   )
 }
 
-const btnBase = 'inline-flex min-h-11 items-center justify-center rounded-full border px-6 text-base font-semibold no-underline transition-transform hover:-translate-y-px cursor-pointer'
+const base = 'inline-flex min-h-12 items-center justify-center rounded-md px-6 text-base font-medium no-underline transition-colors duration-150 cursor-pointer'
 export const btn = {
-  primary: `${btnBase} border-accent bg-accent text-on-accent`,
-  ghost: `${btnBase} border-line bg-transparent text-ink`,
+  primary: `${base} bg-pen text-on-pen hover:bg-ink`,
+  ghost: `${base} border border-rule text-ink hover:border-pen hover:text-pen`,
 }

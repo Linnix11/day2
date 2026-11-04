@@ -28,16 +28,26 @@ export const services = [
 ]
 
 export const useCases = [
-  { tag: 'Commercial', title: 'Demande de devis traitée en 2 minutes', text: "Le formulaire du site crée le contact dans le CRM, l'IA prépare un brouillon de réponse et vous êtes notifié." },
-  { tag: 'Administratif', title: 'Factures fournisseurs classées seules', text: 'Les PDF reçus par e-mail sont lus, renommés, rangés et les montants reportés dans votre tableau de suivi.' },
-  { tag: 'Pilotage', title: 'Reporting hebdo sans copier-coller', text: 'Chaque lundi, un récapitulatif des ventes et des rendez-vous arrive dans votre boîte mail.' },
+  { task: 'Demandes de devis', before: 'Vous recopiez chaque demande dans votre CRM, puis rédigez la réponse de zéro.', after: 'Le formulaire crée le contact, prépare un brouillon de réponse et vous prévient.' },
+  { task: 'Factures fournisseurs', before: 'Les PDF s’accumulent dans la boîte mail et sont classés en fin de mois.', after: 'Chaque facture est lue, renommée, rangée et reportée dans votre tableau de suivi.' },
+  { task: 'Reporting', before: 'Le lundi matin, vous assemblez les chiffres de trois outils différents.', after: 'Le récapitulatif des ventes et des rendez-vous arrive seul dans votre boîte mail.' },
 ]
 
 export const steps = [
-  { title: 'Audit', text: 'On repère ensemble les tâches qui vous coûtent le plus de temps.' },
-  { title: 'Proposition', text: 'Une solution chiffrée, avec le temps gagné estimé, sans engagement.' },
-  { title: 'Mise en place', text: 'Construction, tests sur vos vraies données, puis mise en production.' },
-  { title: 'Suivi', text: 'Prise en main, documentation et ajustements pour que tout reste fiable.' },
+  { title: 'Audit', duration: '30 min offertes', text: 'On repère ensemble les tâches qui vous coûtent le plus de temps.' },
+  { title: 'Proposition', duration: 'sous 72 h', text: 'Une solution chiffrée, avec le temps gagné estimé, sans engagement.' },
+  { title: 'Mise en place', duration: '', text: 'Construction, tests sur vos vraies données, puis mise en production.' },
+  { title: 'Suivi', duration: '', text: 'Prise en main, documentation et ajustements pour que tout reste fiable.' },
+]
+
+// Liste du haut de page : durées moyennes indicatives, en minutes par semaine.
+export const tasks = [
+  { label: 'Recopier les commandes dans le tableur', minutes: 45, preset: true },
+  { label: 'Relancer les factures impayées', minutes: 30, preset: true },
+  { label: 'Répondre aux mêmes questions par e-mail', minutes: 60, preset: true },
+  { label: 'Préparer le reporting du lundi', minutes: 40, preset: false },
+  { label: 'Classer les justificatifs et factures', minutes: 35, preset: false },
+  { label: 'Saisir les rendez-vous dans l’agenda', minutes: 20, preset: false },
 ]
 
 export const needs = [
