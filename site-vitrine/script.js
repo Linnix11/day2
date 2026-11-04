@@ -40,6 +40,6 @@ form.addEventListener('submit', e => {
   if (!ok) { fields.find(f => f.getAttribute('aria-invalid') === 'true').focus(); status.textContent = ''; return; }
   const d = new FormData(form);
   const body = `Nom : ${d.get('nom')}\nE-mail : ${d.get('email')}\nProjet : ${d.get('type')}\n\n${d.get('message')}`;
-  window.location.href = `mailto:contact@atelier-brindille.fr?subject=${encodeURIComponent('Demande de devis – ' + d.get('type'))}&body=${encodeURIComponent(body)}`;
+  window.location.href = `mailto:arthur.champagne@icloud.com?subject=${encodeURIComponent('Demande Axion Studio – ' + d.get('type'))}&body=${encodeURIComponent(body)}`;
   status.textContent = 'Merci ! Votre logiciel de messagerie s’ouvre pour finaliser l’envoi.';
 });
