@@ -18,13 +18,13 @@ export function SectionHead({ eyebrow, title, children }) {
   return (
     <header className="mb-10 max-w-2xl">
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="text-3xl md:text-4xl">{title}</h2>
+      <h2 className="text-3xl leading-tight md:text-4xl">{title}</h2>
       {children && <p className="mt-3 text-muted">{children}</p>}
     </header>
   )
 }
 
-const btnBase = 'inline-flex min-h-11 items-center justify-center rounded-full border px-6 text-[0.95rem] font-semibold no-underline transition-transform hover:-translate-y-px cursor-pointer'
+const btnBase = 'inline-flex min-h-11 items-center justify-center rounded-full border px-6 text-base font-semibold no-underline transition-transform hover:-translate-y-px cursor-pointer'
 export const btn = {
   primary: `${btnBase} border-accent bg-accent text-on-accent`,
   ghost: `${btnBase} border-line bg-transparent text-ink`,

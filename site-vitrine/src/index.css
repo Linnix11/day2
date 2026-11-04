@@ -40,15 +40,13 @@
   --font-sans: Inter, system-ui, sans-serif;
   --font-display: "Space Grotesk", Inter, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
 }
-
-@keyframes pulse-soft { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
 
 @layer base {
   html { scroll-behavior: smooth; }
-  body { @apply bg-bg text-ink font-sans leading-relaxed antialiased; }
-  h1, h2, h3 { @apply font-display font-bold tracking-tight; }
+  body { @apply bg-bg text-ink font-sans leading-[1.6] antialiased; }
+  h1, h2, h3 { @apply font-display font-semibold tracking-tight; }
+  strong, b { @apply font-semibold; }
   :focus-visible { @apply outline-2 outline-offset-3 outline-accent; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }

@@ -6,7 +6,7 @@ import { Services, UseCases, Method, About, Legal, Footer } from './components/S
 export default function App() {
   return (
     <>
-      <a href="#contenu" className="absolute -left-[999px] focus:top-4 focus:left-4 focus:z-[100] focus:bg-surface focus:px-3 focus:py-2">
+      <a href="#contenu" className="absolute -left-[999px] focus:top-4 focus:left-4 focus:z-[100] focus:bg-surface focus:inline-flex focus:min-h-11 focus:items-center focus:px-4">
         Aller au contenu
       </a>
       <Header />

@@ -10,9 +10,9 @@ export function Services() {
       <SectionHead eyebrow="Services" title="Ce que je fais pour vous" />
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {services.map((s, i) => (
-          <article key={s.title} className={`${card} p-7`}>
-            <span className="mb-5 block font-mono text-sm text-accent">{pad(i)}</span>
-            <h3 className="mb-2 text-lg font-medium">{s.title}</h3>
+          <article key={s.title} className={`${card} p-8`}>
+            <span className="mb-4 block font-mono text-sm text-accent">{pad(i)}</span>
+            <h3 className="mb-2 text-lg leading-tight font-medium">{s.title}</h3>
             <p className="text-muted">{s.text}</p>
           </article>
         ))}
@@ -29,9 +29,9 @@ export function UseCases() {
       </SectionHead>
       <div className="grid gap-5 md:grid-cols-3">
         {useCases.map(u => (
-          <article key={u.title} className={`${card} border-l-3 border-l-accent-2 px-7 py-6`}>
-            <p className="mb-3.5 inline-block rounded-md bg-accent/10 px-2 py-0.5 font-mono text-xs font-medium text-accent">{u.tag}</p>
-            <h3 className="mb-2 text-lg font-medium">{u.title}</h3>
+          <article key={u.title} className={`${card} border-l-3 border-l-accent-2 px-8 py-6`}>
+            <p className="mb-4 inline-block rounded-md bg-accent/10 px-2 py-0.5 font-mono text-xs font-medium text-accent">{u.tag}</p>
+            <h3 className="mb-2 text-lg leading-tight font-medium">{u.title}</h3>
             <p className="text-muted">{u.text}</p>
           </article>
         ))}
@@ -46,9 +46,9 @@ export function Method() {
       <SectionHead eyebrow="Méthode" title="Comment se déroule un projet" />
       <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {steps.map((s, i) => (
-          <li key={s.title} className="border-t-2 border-ink pt-5">
-            <span className="mb-2 block font-display text-3xl font-bold text-accent">{pad(i)}</span>
-            <h3 className="mb-2 text-lg font-medium">{s.title}</h3>
+          <li key={s.title} className="border-t-2 border-ink pt-6">
+            <span className="mb-2 block font-display text-3xl font-semibold text-accent">{pad(i)}</span>
+            <h3 className="mb-2 text-lg leading-tight font-medium">{s.title}</h3>
             <p className="text-muted">{s.text}</p>
           </li>
         ))}
@@ -62,7 +62,7 @@ export function About() {
     <Section id="apropos" alt>
       <div className="grid items-center gap-10 md:grid-cols-[240px_1fr]">
         <div aria-hidden="true" className="grid aspect-square max-w-60 place-items-center rounded-3xl bg-linear-135 from-accent to-accent-2">
-          <span className="font-display text-6xl font-bold text-white">AC</span>
+          <span className="font-display text-6xl leading-tight font-semibold text-white">AC</span>
         </div>
         <div className="max-w-2xl">
           <Eyebrow>À propos</Eyebrow>
@@ -88,14 +88,14 @@ export function Legal() {
     ['Siège', company.siege],
     ['SIRET', company.siret],
     ['TVA', 'TVA non applicable, art. 293 B du CGI'],
-    ['Contact', <a href={`mailto:${company.email}`} className="text-accent">{company.email}</a>],
+    ['Contact', <a href={`mailto:${company.email}`} className="-my-3 inline-block py-3 text-accent">{company.email}</a>],
     ['Directeur de la publication', company.owner],
     ['Hébergeur', company.host],
   ]
   return (
     <Section id="mentions" alt className="py-16! text-sm">
-      <h2 className="text-2xl">Mentions légales</h2>
-      <dl className="mt-6 grid gap-x-6 gap-y-1 sm:grid-cols-[minmax(120px,220px)_1fr] sm:gap-y-2.5">
+      <h2 className="text-2xl leading-tight">Mentions légales</h2>
+      <dl className="mt-6 grid gap-x-6 gap-y-1 sm:grid-cols-[minmax(120px,220px)_1fr] sm:gap-y-2">
         {rows.map(([k, v]) => (
           <div key={k} className="contents">
             <dt className="text-muted">{k}</dt>
@@ -109,11 +109,11 @@ export function Legal() {
 
 export function Footer() {
   return (
-    <footer className="border-t border-line py-8 text-sm text-muted">
+    <footer className="border-t border-line py-6 text-sm text-muted">
       <div className="mx-auto flex max-w-[1120px] flex-wrap justify-between gap-x-8 gap-y-2 px-4 md:px-8">
         <p><strong className="text-ink">{company.brand}</strong> — {company.owner}, EI · Micro-entreprise</p>
         <p>TVA non applicable, art. 293 B du CGI</p>
-        <p>© {new Date().getFullYear()} {company.domain} · <a href="#mentions" className="text-accent">Mentions légales</a></p>
+        <p>© {new Date().getFullYear()} {company.domain} · <a href="#mentions" className="-my-3 inline-block py-3 text-accent">Mentions légales</a></p>
       </div>
     </footer>
   )

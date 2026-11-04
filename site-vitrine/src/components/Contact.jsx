@@ -8,12 +8,12 @@ const rules = {
   message: v => (v.trim().length >= 10 ? '' : 'Décrivez votre projet en quelques mots (10 caractères minimum).'),
 }
 
-const input = 'w-full min-h-11 rounded-lg border bg-bg px-3 py-2.5 text-ink'
+const input = 'w-full min-h-11 rounded-lg border bg-bg px-3 py-3 text-ink'
 
 function Field({ id, label, error, children }) {
   return (
-    <div className="mb-4.5">
-      <label htmlFor={id} className="mb-1.5 block text-sm font-semibold">{label}</label>
+    <div className="mb-4">
+      <label htmlFor={id} className="mb-2 block text-sm font-semibold">{label}</label>
       {children}
       {error && <p id={`${id}-err`} className="mt-1 text-sm text-red-600">{error}</p>}
     </div>
@@ -34,7 +34,7 @@ export default function Contact() {
   const onChange = e => {
     const { name, value } = e.target
     setValues(v => ({ ...v, [name]: value }))
-    if (errors[name]) setErrors(er => ({ ...er, [name]: rules[name](value) }))
+    if (errors[name]) setErrors(er => ({ ...er, [name]: '' }))
   }
 
   const onSubmit = e => {
@@ -57,8 +57,8 @@ export default function Contact() {
   })
 
   const infos = [
-    ['E-mail', <a href={`mailto:${company.email}`} className="text-accent">{company.email}</a>],
-    ['Téléphone', <a href={`tel:${company.phoneHref}`} className="text-accent">{company.phone}</a>],
+    ['E-mail', <a href={`mailto:${company.email}`} className="inline-flex min-h-11 items-center text-accent">{company.email}</a>],
+    ['Téléphone', <a href={`tel:${company.phoneHref}`} className="inline-flex min-h-11 items-center text-accent">{company.phone}</a>],
     ['Zone', `${company.city} · Île-de-France · à distance`],
     ['Site', company.domain],
   ]
@@ -70,16 +70,16 @@ export default function Contact() {
           <Eyebrow>Contact</Eyebrow>
           <h2 className="mb-4 text-3xl md:text-4xl">Parlons de votre projet</h2>
           <p>Décrivez la tâche qui vous fait perdre du temps, je vous réponds sous 48 heures ouvrées.</p>
-          <ul className="mt-7">
+          <ul className="mt-8">
             {infos.map(([k, v]) => (
-              <li key={k} className="grid grid-cols-[100px_1fr] gap-3 border-b border-line py-3 break-words">
+              <li key={k} className="grid grid-cols-[100px_1fr] min-h-13 items-center gap-3 border-b border-line py-1 break-words">
                 <span className="text-sm text-muted">{k}</span>{v}
               </li>
             ))}
           </ul>
         </div>
 
-        <form noValidate onSubmit={onSubmit} className="rounded-xl border border-line bg-surface p-7">
+        <form noValidate onSubmit={onSubmit} className="rounded-xl border border-line bg-surface p-8">
           <Field id="nom" label="Nom" error={errors.nom}>
             <input {...fieldProps('nom')} autoComplete="name" required />
           </Field>
@@ -95,7 +95,7 @@ export default function Contact() {
             <textarea {...fieldProps('message')} rows={5} required className={`${fieldProps('message').className} resize-y`} />
           </Field>
           <button type="submit" className={btn.primary}>Envoyer la demande</button>
-          <p role="status" aria-live="polite" className="mt-3.5 font-medium">{status}</p>
+          <p role="status" aria-live="polite" className="mt-4 font-medium">{status}</p>
         </form>
       </div>
     </Section>
