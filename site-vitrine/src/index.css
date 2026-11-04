@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* Couleurs du thème : modifiez ces valeurs pour changer l'identité visuelle */
+:root {
+  --c-bg: #f6f7fb;
+  --c-bg-alt: #eceef6;
+  --c-surface: #ffffff;
+  --c-ink: #12131a;
+  --c-muted: #5a5f73;
+  --c-line: #dcdfea;
+  --c-accent: #4f46e5;
+  --c-accent-2: #06b6d4;
+  --c-on-accent: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: #0d0e14; --c-bg-alt: #13151e; --c-surface: #181a25;
+    --c-ink: #eef0f7; --c-muted: #a0a5b8; --c-line: #2a2d3c;
+    --c-accent: #818cf8; --c-accent-2: #22d3ee; --c-on-accent: #0d0e14;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--c-bg);
+  --color-bg-alt: var(--c-bg-alt);
+  --color-surface: var(--c-surface);
+  --color-ink: var(--c-ink);
+  --color-muted: var(--c-muted);
+  --color-line: var(--c-line);
+  --color-accent: var(--c-accent);
+  --color-accent-2: var(--c-accent-2);
+  --color-on-accent: var(--c-on-accent);
+  --font-sans: Inter, system-ui, sans-serif;
+  --font-display: "Space Grotesk", Inter, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-soft { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-bg text-ink font-sans leading-relaxed antialiased; }
+  h1, h2, h3 { @apply font-display font-bold tracking-tight; }
+  :focus-visible { @apply outline-2 outline-offset-3 outline-accent; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+}
